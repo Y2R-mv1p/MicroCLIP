@@ -1,0 +1,25 @@
+# --- Training outputs (large checkpoints / logs / metrics) ---
+# Outputs land in OUTPUT_DIR, which defaults to the repo-root log_vlm_MicroPool811
+# (scale-experiment scripts write to log_scale_*). Keep them out of version
+# control so a training run never gets pushed to the repo.
+log_vlm_MicroPool811/
+log_scale_*/
+log/
+
+# --- Python runtime cache ---
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# --- Misc ---
+.DS_Store
+*.tmp
+nohup.out
+
+# --- Locally generated quickstart images (see scripts/make_examples.sh) ---
+# Not shipped: the source-image terms in LICENSES.md must be checked first.
+examples/
+

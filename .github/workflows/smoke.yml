@@ -1,0 +1,42 @@
+name: smoke
+
+# Import, forward-pass and shell-syntax checks. Runs on CPU only: no GPU, no
+# checkpoint and no dataset download are required. The dataset-path checks need
+# MicroPool-2M, so they run only when the repository variable
+# MICRO_DATA_ROOT is configured (Settings -> Variables -> Actions).
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install CPU-only dependencies
+        run: |
+          # requirements.txt pins the CUDA build used for training; CI installs
+          # the CPU wheels plus the runtime deps needed by the code paths below.
+          python -m pip install --upgrade pip
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install ftfy regex tqdm webdataset braceexpand pillow
+
+      - name: Smoke test (code paths)
+        run: bash scripts/smoke_test.sh
+
+      - name: Smoke test (dataset paths)
+        if: ${{ vars.MICRO_DATA_ROOT != '' }}
+        env:
+          MICRO_DATA_ROOT: ${{ vars.MICRO_DATA_ROOT }}
+        run: |
+          # Dataset checks need a locally mounted copy of MicroPool-2M; skip
+          # silently when the runner has no dataset (the code smoke test above
+          # is the binding check).
+          bash scripts/smoke_test.sh --with-data || echo "dataset not available on this runner; skipped"

@@ -1,0 +1,24 @@
+# Environment validated for the MicroCLIP release (Python 3.13, CUDA 13).
+# Install the CUDA build of torch that matches your driver, e.g.
+#   pip install torch==2.12.0 torchvision==0.27.0 --index-url https://download.pytorch.org/whl/cu130
+# open_clip is vendored under src/ (a fork adding the 256-token text context),
+# so it is installed in editable/development mode rather than from PyPI:
+#   export PYTHONPATH="$PWD/src:$PYTHONPATH"
+torch==2.12.0
+torchvision==0.27.0
+numpy==2.4.5
+Pillow==12.2.0
+webdataset==0.2.86
+braceexpand==0.1.7
+ftfy==6.3.1
+regex==2026.5.9
+tqdm==4.67.3
+
+# Data preparation, evaluation and checkpoint tooling
+pandas==3.0.3
+huggingface-hub==1.15.0
+safetensors==0.7.0
+protobuf==7.34.1
+
+# Optional: only needed for the backbone-scale study (timm-backed towers)
+timm==1.0.27

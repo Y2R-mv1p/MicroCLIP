@@ -1,0 +1,33 @@
+# TODO(release): replace every placeholder below with the paper's author list,
+# publication venue, DOI/arXiv id and repository URL before publishing.
+cff-version: 1.2.0
+message: "If you use MicroCLIP or MicroPool-2M in your research, please cite the paper below."
+title: "MicroCLIP: Connecting Text and Microscopy Images via Contrastive Language-Image Pretraining"
+type: software
+version: 0.1.0
+date-released: "2026-10-09"
+license: Apache-2.0
+repository-code: "TODO(release): repository URL"
+keywords:
+  - microscopy
+  - fluorescence microscopy
+  - vision-language pretraining
+  - contrastive learning
+  - zero-shot classification
+  - image-text retrieval
+authors:
+  - name: "TODO(release): the MicroCLIP authors"
+abstract: >-
+  MicroCLIP is a 150M-parameter vision-language model for single-channel fluorescence
+  microscopy, fine-tuned from DFN2B-CLIP ViT-B/16 on MicroPool-2M, a 2.5M-image corpus
+  annotated with category titles, per-image descriptions, and knowledge-level biological
+  captions. The released checkpoint reaches 98.46% zero-shot Top-1 in domain and retains
+  67.70% / 34.07% / 46.13% under compositional, cell-line, and organelle-set shift, and
+  supports cross-modal retrieval at 61.5% I2T / 63.3% T2I Recall@1.
+preferred-citation:
+  type: article
+  title: "MicroCLIP: Connecting Text and Microscopy Images via Contrastive Language-Image Pretraining"
+  authors:
+    - name: "TODO(release): the MicroCLIP authors"
+  journal: "TODO(release)"
+  year: 2026
