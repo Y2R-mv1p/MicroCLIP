@@ -1,0 +1,168 @@
+{
+  "images": [
+    {
+      "source": "01_hero/01_Nucleoplasm_of_HeLa.png",
+      "sourceSha256": "e989368d1133e52bfdc59d9c0ed6f8473a7edc1997eab994ef55a7fcf4b1e099",
+      "file": "assets/microscopy/hero/01_Nucleoplasm_of_HeLa.jpg",
+      "sha256": "bab09562b624c3df1cebefbd15912b79a97333a0a6a6fe9822da94bbe08e0d75",
+      "width": 800,
+      "height": 800,
+      "processing": "900 to 800 px; JPEG quality 88; no crop or recoloring"
+    },
+    {
+      "source": "01_hero/02_Mitochondria_of_HeLa.png",
+      "sourceSha256": "9006c64d57710a444e0994238bde55beaa01b55a153bc25ec42da5b934cc466e",
+      "file": "assets/microscopy/hero/02_Mitochondria_of_HeLa.jpg",
+      "sha256": "78522beb850e450fb98ba24ac5c72acdc206bf82e8acec5e9ae04051b7d8f034",
+      "width": 800,
+      "height": 800,
+      "processing": "900 to 800 px; JPEG quality 88; no crop or recoloring"
+    },
+    {
+      "source": "01_hero/03_Nuclear_speckles_of_U2OS.png",
+      "sourceSha256": "37a0971877fa79d1802275c6a03f85bfb01b2917d85a504e222d4d63b0d0503b",
+      "file": "assets/microscopy/hero/03_Nuclear_speckles_of_U2OS.jpg",
+      "sha256": "776d5379ada15bdb2c536ec10c5dcc2ca36505a9a75af25d1710e06c23ca410b",
+      "width": 800,
+      "height": 800,
+      "processing": "900 to 800 px; JPEG quality 88; no crop or recoloring"
+    },
+    {
+      "source": "01_hero/04_Mitochondria_and_Nucleoplasm_of_U2OS.png",
+      "sourceSha256": "45b3cd289004d5287cc71ad20551eca842827d9166ad8b7fa0c592563cb64d0b",
+      "file": "assets/microscopy/hero/04_Mitochondria_and_Nucleoplasm_of_U2OS.jpg",
+      "sha256": "8d1cbde6129480c78b65944ecce67ad980cef19d2275b9646b8601adc5448bc3",
+      "width": 800,
+      "height": 800,
+      "processing": "900 to 800 px; JPEG quality 88; no crop or recoloring"
+    },
+    {
+      "source": "02_three_level/Actin_filaments_and_Cytosol_of_U251MG/image.jpg",
+      "sourceSha256": "33ebe1542104e9d8d5261c1ba63a2b9f86e79e3138c671bdd8814510b8d44669",
+      "file": "assets/microscopy/supervision/Actin_filaments_and_Cytosol_of_U251MG.jpg",
+      "sha256": "33ebe1542104e9d8d5261c1ba63a2b9f86e79e3138c671bdd8814510b8d44669",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "source": "02_three_level/Mitochondria_of_A549/image.jpg",
+      "sourceSha256": "128de5d2001febe3b6efea93b7f7c5e2c74dcbe87bc4e770a82aa3cea618e879",
+      "file": "assets/microscopy/supervision/Mitochondria_of_A549.jpg",
+      "sha256": "128de5d2001febe3b6efea93b7f7c5e2c74dcbe87bc4e770a82aa3cea618e879",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "source": "03_gallery/Endoplasmic_reticulum_of_U2OS.jpg",
+      "sourceSha256": "fe7be3c7955839d179a6bbb98401f379a20dc83fb2a0baf54abb01af211e7e52",
+      "file": "assets/microscopy/gallery/Endoplasmic_reticulum_of_U2OS.jpg",
+      "sha256": "fe7be3c7955839d179a6bbb98401f379a20dc83fb2a0baf54abb01af211e7e52",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "source": "03_gallery/Nucleus_of_BJ.jpg",
+      "sourceSha256": "258475946f1fafa84ab80ed4eb85c3cf5b771410291bcd00f544cbe6cf18b568",
+      "file": "assets/microscopy/gallery/Nucleus_of_BJ.jpg",
+      "sha256": "258475946f1fafa84ab80ed4eb85c3cf5b771410291bcd00f544cbe6cf18b568",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "source": "05_compositional/01_Nucleus_of_U2OS__seen.jpg",
+      "sourceSha256": "737ab3dc59e461d88cc86fe4035ef7bd75757a4f458de51ef4f4bec842d8672a",
+      "file": "assets/microscopy/composition/01_Nucleus_of_U2OS__seen.jpg",
+      "sha256": "737ab3dc59e461d88cc86fe4035ef7bd75757a4f458de51ef4f4bec842d8672a",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "source": "05_compositional/04_Endoplasmic_reticulum_of_BJ__unseen.jpg",
+      "sourceSha256": "11c5a85d52cfec06a7d0f62b9869e77838cb4b3777a0be3c5e944986b549df3d",
+      "file": "assets/microscopy/composition/04_Endoplasmic_reticulum_of_BJ__unseen.jpg",
+      "sha256": "11c5a85d52cfec06a7d0f62b9869e77838cb4b3777a0be3c5e944986b549df3d",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "source": "04_retrieval/case1_Microtubules_Nucleoli_U2OS/rank01_s0.4149_Microtubules_and_Nucleoli_fibrillar_center_of_U-2_OS_6.jpg",
+      "sourceSha256": "07831e0f7d780a80a14eea44339d32b2409f114fea6ef016639a91138c2fcd69",
+      "file": "assets/microscopy/retrieval/case-1/rank-01.jpg",
+      "sha256": "07831e0f7d780a80a14eea44339d32b2409f114fea6ef016639a91138c2fcd69",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case1_Microtubules_Nucleoli_U2OS/rank02_s0.3229_Cytokinetic_bridge_and_Microtubules_and_Nucleoli_fibrillar_center_of_U-2_OS_1.jpg",
+      "sourceSha256": "a7ced112b678546568f0586675b0095df14b6b0dcedd42e2f7ac9c54521d3454",
+      "file": "assets/microscopy/retrieval/case-1/rank-02.jpg",
+      "sha256": "a7ced112b678546568f0586675b0095df14b6b0dcedd42e2f7ac9c54521d3454",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case1_Microtubules_Nucleoli_U2OS/rank03_s0.3145_Actin_filaments_and_Nucleoli_fibrillar_center_of_U-2_OS_1.jpg",
+      "sourceSha256": "5ee0c8f9aa048fd36a64d6b925ff6bc4c491ce34c57a99b639b6fa89646b7cff",
+      "file": "assets/microscopy/retrieval/case-1/rank-03.jpg",
+      "sha256": "5ee0c8f9aa048fd36a64d6b925ff6bc4c491ce34c57a99b639b6fa89646b7cff",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case1_Microtubules_Nucleoli_U2OS/rank04_s0.3128_Microtubules_and_Nuclear_bodies_of_U-2_OS_5.jpg",
+      "sourceSha256": "238d7c266f45d935d4492afa9c5e60a2e457c58b63d1db0bedca74d9f848c896",
+      "file": "assets/microscopy/retrieval/case-1/rank-04.jpg",
+      "sha256": "238d7c266f45d935d4492afa9c5e60a2e457c58b63d1db0bedca74d9f848c896",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case1_Microtubules_Nucleoli_U2OS/rank05_s0.3042_Cytosol_and_Microtubule_organizing_center_and_Microtubules_of_U-2_OS_4.jpg",
+      "sourceSha256": "062d9790df833af46fe4dbd45d0325e0a76f13f13e39bc5e7cbb980158911f9a",
+      "file": "assets/microscopy/retrieval/case-1/rank-05.jpg",
+      "sha256": "062d9790df833af46fe4dbd45d0325e0a76f13f13e39bc5e7cbb980158911f9a",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case2_ER_Intermediate_filaments_A431/rank01_s0.4091_Endoplasmic_reticulum_and_Intermediate_filaments_of_A-431_1.jpg",
+      "sourceSha256": "9601eaca6468c68befe76ddc8ec2e5b23fae07438c4bc3c701805a8ae10d57ef",
+      "file": "assets/microscopy/retrieval/case-2/rank-01.jpg",
+      "sha256": "9601eaca6468c68befe76ddc8ec2e5b23fae07438c4bc3c701805a8ae10d57ef",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case2_ER_Intermediate_filaments_A431/rank02_s0.3276_Endoplasmic_reticulum_and_Intermediate_filaments_of_U-251_MG_1.jpg",
+      "sourceSha256": "311b7666f4de15441006df42dac78c3b9d48740c94d8d11b948b878d2359469c",
+      "file": "assets/microscopy/retrieval/case-2/rank-02.jpg",
+      "sha256": "311b7666f4de15441006df42dac78c3b9d48740c94d8d11b948b878d2359469c",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case2_ER_Intermediate_filaments_A431/rank03_s0.3054_er_of_A549_348.jpg",
+      "sourceSha256": "8b69718d80a0da33536becbef6d1907e6c21d6d7b7eb3e77d9cf490ed7ad6404",
+      "file": "assets/microscopy/retrieval/case-2/rank-03.jpg",
+      "sha256": "8b69718d80a0da33536becbef6d1907e6c21d6d7b7eb3e77d9cf490ed7ad6404",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case2_ER_Intermediate_filaments_A431/rank04_s0.3001_Endoplasmic_reticulum_of_A-431_104.jpg",
+      "sourceSha256": "3f90d15617449495ae5b86a260add5562dc53fd302d91409783e91858171d62f",
+      "file": "assets/microscopy/retrieval/case-2/rank-04.jpg",
+      "sha256": "3f90d15617449495ae5b86a260add5562dc53fd302d91409783e91858171d62f",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "source": "04_retrieval/case2_ER_Intermediate_filaments_A431/rank05_s0.2912_Nucleoli_and_Intermediate_filaments_of_HeLa_1.jpg",
+      "sourceSha256": "cbb8536dfeefadb587d2ad9ce3bf5938a61a08ae253b7173823611ca0a1f5d69",
+      "file": "assets/microscopy/retrieval/case-2/rank-05.jpg",
+      "sha256": "cbb8536dfeefadb587d2ad9ce3bf5938a61a08ae253b7173823611ca0a1f5d69",
+      "width": 384,
+      "height": 384
+    }
+  ]
+}

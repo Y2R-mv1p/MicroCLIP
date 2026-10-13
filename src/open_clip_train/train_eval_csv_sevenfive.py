@@ -33,13 +33,9 @@ except ImportError:
     tqdm = None
 
 
-DEFAULT_TRAIN_DATA = "/data2/ryr/dataset_new/ood_split_strict_check/iid/train.tsv"
-DEFAULT_TEST_DATA = "/data2/ryr/dataset_new/ood_split_strict_check/iid/test.tsv"
-DEFAULT_PRETRAINED = (
-    "/data2/ryr/workspace/microllm/open_clip-main/logs/"
-    "2026_05_19-14_53_04-model_ViT-L-14-lr_1e-05-b_2048-j_8-p_amp_bf16/"
-    "checkpoints/epoch_1.pt"
-)
+DEFAULT_TRAIN_DATA = "training/train.tsv"
+DEFAULT_TEST_DATA = "evaluation/iid/test.tsv"
+DEFAULT_PRETRAINED = "dfn2b"
 
 METRICS_FIELDS = [
     "epoch",

@@ -15,9 +15,9 @@ R@1/R@5/R@10 (plus median/mean rank) to a summary CSV.
 Example
 -------
 PYTHONPATH=src python -m open_clip_train.eval_retrieval_keep300 \
-    --checkpoint-dir log_vlm_MicroPool811/checkpoints/epochs \
+    --checkpoint-dir outputs/microclip_dfn_b16/checkpoints/epochs \
     --text-fields normalized_caption \
-    --output-dir log_vlm_MicroPool811/eval_retrieval_keep300
+    --output-dir outputs/microclip_dfn_b16/eval_retrieval_keep300
 """
 
 import argparse
@@ -40,10 +40,10 @@ from open_clip_train.precision import get_autocast
 
 _LOGGER = logging.getLogger("open_clip_train.eval_retrieval_keep300")
 
-DEFAULT_IMAGES_DIR = "/data2/ryr/data_retrieval/wash_data/visual_cleaned/keep_extracted/300"
-DEFAULT_JSONL = "/data2/ryr/data_retrieval/wash_data/visual_cleaned/keep_extracted/keep.jsonl"
-DEFAULT_CKPT_DIR = "/data2/ryr/workspace/micro-idea/MicroCLIP-M811-semantic_meta_vlm0.7_mixed/log_vlm_MicroPool811/checkpoints/epochs"
-DEFAULT_PRETRAINED = "/data2/ryr/model_cache/DFN2B-CLIP-ViT-B-16/open_clip_pytorch_model.bin"
+DEFAULT_IMAGES_DIR = "evaluation/retrieval_300/images"
+DEFAULT_JSONL = "evaluation/retrieval_300/metadata.jsonl"
+DEFAULT_CKPT_DIR = "outputs/microclip_dfn_b16/checkpoints/epochs"
+DEFAULT_PRETRAINED = "dfn2b"
 
 SUMMARY_FIELDS = [
     "epoch",

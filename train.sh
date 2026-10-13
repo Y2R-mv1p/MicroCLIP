@@ -21,7 +21,7 @@ BACKBONE_CACHE_DIR="${BACKBONE_CACHE_DIR-}"
 # =============================================================================
 # METHOD MODULES — each feature is an independent on/off switch.
 # This repo's default method: three-way text selection and MetaCLIP balance ON,
-# VLM mixing and data augmentation OFF.
+# VLM mixing and data augmentation ON.
 #   ENABLE_THREE_WAY_TEXT=1 -> TRAIN_LONG_CAPTION_MODE=three-way (randomly pick
 #       long caption / short title / semantic-rewritten title per sample);
 #       =0 -> "none" (plain short title only).
@@ -77,7 +77,7 @@ fi
 # resolve; if any is empty, point MICRO_DATA_ROOT at your dataset root (see
 # paths.sh) or export the individual variable.
 missing_reqs=()
-for req_var in WDS_TRAIN IID_DATA PARTIAL_OOD_DATA OOD_DATA CELL_OOD_DATA STRUCTURE_OOD_DATA RETRIEVAL_DATA RETRIEVAL_DATA_1000; do
+for req_var in WDS_TRAIN; do
   if [[ -z "${!req_var:-}" ]]; then
     missing_reqs+=("${req_var}")
   fi
@@ -94,7 +94,7 @@ if [[ "${#missing_reqs[@]}" -gt 0 ]]; then
   exit 1
 fi
 
-OUTPUT_DIR="${OUTPUT_DIR:-${SCRIPT_DIR}/log_vlm_MicroPool811}"
+OUTPUT_DIR="${OUTPUT_DIR:-${SCRIPT_DIR}/outputs/microclip_dfn_b16}"
 
 # Runtime and selection configuration.
 NUM_GPUS="${NUM_GPUS:-8}"
@@ -103,21 +103,16 @@ EPOCHS="${EPOCHS:-30}"
 # training; LEARNING_RATE follows the linear scaling rule (x4 -> 4e-5) and WARMUP is scaled
 # down to keep the same warmup sample budget (and stay under the ~9k total steps at this batch).
 TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-1024}"
-EVAL_BATCH_SIZE="${EVAL_BATCH_SIZE:-1024}"
 WORKERS="${WORKERS:-4}"
 PREFETCH_FACTOR="${PREFETCH_FACTOR:-4}"
 PRECISION="${PRECISION:-amp_bf16}"
 LEARNING_RATE="${LEARNING_RATE:-4e-5}"
 WARMUP="${WARMUP:-2500}"
-CLASSIFICATION_BEST_METRIC="${CLASSIFICATION_BEST_METRIC:-top1}"
-ITOT_BEST_METRIC="${ITOT_BEST_METRIC:-i2t_r1}"
-TTOI_BEST_METRIC="${TTOI_BEST_METRIC:-t2i_r1}"
-SIMILARITY_CHUNK_SIZE="${SIMILARITY_CHUNK_SIZE:-4096}"
 GRAD_CHECKPOINTING="${GRAD_CHECKPOINTING:-1}"
 # Persist a lightweight model-state snapshot per epoch at
-# ${OUTPUT_DIR}/checkpoints/epochs/epoch_XXX.pt (on top of the seven best checkpoints).
-# Off by default to save disk; enable for per-epoch retrieval/analysis.
-SAVE_EVERY_EPOCH_WEIGHTS="${SAVE_EVERY_EPOCH_WEIGHTS:-0}"
+# ${OUTPUT_DIR}/checkpoints/epochs/epoch_XXX.pt (alongside last.pt with optimizer state).
+# On by default for independent checkpoint evaluation.
+SAVE_EVERY_EPOCH_WEIGHTS="${SAVE_EVERY_EPOCH_WEIGHTS:-1}"
 
 # Semantic title replacement. The training title "a microscopy photo of {structure}_of_{cell}"
 # is rewritten by substituting the structure/cell names with their biological semantic captions
@@ -251,6 +246,9 @@ if [[ "${BACKBONE_PRETRAINED_IMAGE}" == "1" ]]; then
 fi
 
 TRAINING_FLAGS=(--local-loss --gather-with-grad)
+if [[ -n "${RESUME:-}" ]]; then
+  TRAINING_FLAGS+=(--resume "${RESUME}")
+fi
 if [[ "${GRAD_CHECKPOINTING}" == "1" ]]; then
   TRAINING_FLAGS+=(--grad-checkpointing)
 fi
@@ -291,28 +289,15 @@ echo "Modules: three-way-text=${ENABLE_THREE_WAY_TEXT} meta-balance=${ENABLE_MET
 echo "Train data: ${TRAIN_DATA}"
 echo "Train samples/epoch: ${TRAIN_NUM_SAMPLES}"
 echo "MetaCLIP balancing=${METACLIP_BALANCE} source=${METACLIP_BALANCE_SOURCE} threshold=${METACLIP_BALANCE_THRESHOLD}"
-echo "Training, seven-way evaluation, and best-checkpoint selection will run in one process."
-echo "Per-epoch results: ${OUTPUT_DIR}/final_result/epoch_results.csv"
+echo "Training only; run eval.sh separately to evaluate a checkpoint."
+echo "Per-epoch results: ${OUTPUT_DIR}/metrics.csv"
 
 PYTHONPATH="${SCRIPT_DIR}/src:${PYTHONPATH:-}" torchrun --nproc_per_node "${NUM_GPUS}" \
-  -m open_clip_train.train_eval_only_sevenfive \
+  -m open_clip_train.train \
   "${BACKBONE_ARGS[@]}" \
   --train-data "${TRAIN_DATA}" \
   --train-num-samples "${TRAIN_NUM_SAMPLES}" \
   "${METACLIP_ARGS[@]}" \
-  --iid-data "${IID_DATA}" \
-  --partial-ood-data "${PARTIAL_OOD_DATA}" \
-  --ood-data "${OOD_DATA}" \
-  --cell-ood-data "${CELL_OOD_DATA}" \
-  --structure-ood-data "${STRUCTURE_OOD_DATA}" \
-  --retrieval-data "${RETRIEVAL_DATA}" \
-  --retrieval-data-1000 "${RETRIEVAL_DATA_1000}" \
-  --retrieval-text-source json \
-  --retrieval-json-key long_caption \
-  --classification-best-metric "${CLASSIFICATION_BEST_METRIC}" \
-  --itot-best-metric "${ITOT_BEST_METRIC}" \
-  --ttoi-best-metric "${TTOI_BEST_METRIC}" \
-  --similarity-chunk-size "${SIMILARITY_CHUNK_SIZE}" \
   --csv-caption-key txt \
   --train-long-caption-key long_caption \
   --train-long-caption-mode "${TRAIN_LONG_CAPTION_MODE}" \
@@ -329,11 +314,10 @@ PYTHONPATH="${SCRIPT_DIR}/src:${PYTHONPATH:-}" torchrun --nproc_per_node "${NUM_
   --template "{name}" \
   --precision "${PRECISION}" \
   --batch-size "${TRAIN_BATCH_SIZE}" \
-  --eval-batch-size "${EVAL_BATCH_SIZE}" \
   --lr "${LEARNING_RATE}" \
   --warmup "${WARMUP}" \
   --epochs "${EPOCHS}" \
   --workers "${WORKERS}" \
   --prefetch-factor "${PREFETCH_FACTOR}" \
   --output-dir "${OUTPUT_DIR}" \
-  "${TRAINING_FLAGS[@]}"
+  "${TRAINING_FLAGS[@]}" "$@"

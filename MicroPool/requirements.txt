@@ -1,0 +1,7 @@
+# Validated release environment: Python 3.13, numpy 2.2.6, Pillow 12.2.0.
+# Every reconstructed image is checked against its frozen SHA256.
+numpy==2.2.6
+Pillow==12.2.0
+tifffile==2025.5.10
+imagecodecs>=2024.1.1
+czifile==2019.7.2.3

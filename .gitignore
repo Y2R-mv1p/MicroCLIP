@@ -1,10 +1,9 @@
 # --- Training outputs (large checkpoints / logs / metrics) ---
-# Outputs land in OUTPUT_DIR, which defaults to the repo-root log_vlm_MicroPool811
-# (scale-experiment scripts write to log_scale_*). Keep them out of version
-# control so a training run never gets pushed to the repo.
-log_vlm_MicroPool811/
+# Outputs land under outputs/ by default. Keep legacy log directories ignored too,
+# so a training run never gets pushed to the repository.
 log_scale_*/
 log/
+outputs/
 
 # --- Python runtime cache ---
 __pycache__/
@@ -23,3 +22,13 @@ nohup.out
 # Not shipped: the source-image terms in LICENSES.md must be checked first.
 examples/
 
+
+# Model artifacts are distributed through Hugging Face.
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Reconstructed evaluation data and raw source downloads (keep outside the repo).
+micropool-eval/
+*.part

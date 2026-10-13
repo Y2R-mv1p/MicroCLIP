@@ -1,10 +1,5 @@
 ---
-license: other
-license_name: to-be-determined
-license_link: LICENSES.md
 base_model: apple/DFN2B-CLIP-ViT-B-16
-datasets:
-  - TODO_RELEASE_ORG/MicroPool-2M
 library_name: open_clip
 pipeline_tag: zero-shot-image-classification
 tags:
@@ -24,8 +19,9 @@ descriptions, and knowledge-level biological captions — using the CLIP contras
 objective with three-level text supervision, composition-aware balancing, and rare-class
 augmentation.
 
-The released checkpoint is epoch 15 of the canonical run, selected by mean Top-1 accuracy
-over the five classification splits.
+The reported MicroCLIP results below use the epoch-15 checkpoint of the canonical run.
+Model checkpoints are distributed separately; consult the accompanying model card and
+license for their usage terms.
 
 ## Results
 
@@ -43,11 +39,13 @@ Zero-shot classification Top-1 (%) and retrieval Recall@1 (%) on the 1,000-pair 
 ## Usage
 
 ```python
-# Clone the code repository first: the model needs its vendored open_clip fork
-# (256-token text context) and the checkpoint loader.
+# Clone this code repository first: the model needs its vendored open_clip fork
+# (256-token text context) and checkpoint loader. Obtain a checkpoint separately.
 import inference
 
-model, preprocess, tokenizer = inference.load_model("microclip_epoch015.pt", device="cuda")
+model, preprocess, tokenizer = inference.load_model(
+    "/path/to/microclip_epoch015.safetensors", device="cuda"
+)
 
 classes = [
     "a microscopy photo of Nucleus_of_HeLa",
@@ -67,10 +65,10 @@ the model can be used as a frozen encoder for retrieval, clustering, or linear p
 ## Training
 
 - **Initialization**: DFN2B-CLIP ViT-B/16 (both towers), all parameters fine-tuned.
-- **Data**: 2,498,617 microscopy images + 609,740 natural-image records + 175,516 rare-class augmented copies.
-- **Objective**: CLIP contrastive loss, three-level text sampling (25% title / 50% long caption / 25% semantic rewrite).
+- **Data**: 2,498,617 microscopy records + 609,740 auxiliary records + 175,516 rare-class augmented records.
+- **Objective**: CLIP contrastive loss, three-level text sampling (50% category / 25% detail / 25% knowledge rewrite).
 - **Schedule**: 12,000 updates, AdamW, global batch 8,192, peak LR 4e-5, 2,500 warmup steps, cosine decay, weight decay 0.2.
-- **Precision / hardware**: bf16, 8× NVIDIA RTX PRO 5000 (72 GB), ≈55 h for the full 30-epoch schedule; epoch 15 (the released checkpoint) at ≈25–28 h.
+- **Precision / hardware**: bf16, 8× NVIDIA RTX PRO 5000 (72 GB), ≈55 h for the full 30-epoch schedule.
 - **Inputs**: 224×224 images, 256-token text context.
 
 ## Intended use and limitations
@@ -83,9 +81,11 @@ the model can be used as a frozen encoder for retrieval, clustering, or linear p
 
 ## Citation
 
-See `CITATION.cff` in the code repository. Paper and author list: TBD.
+See `CITATION.cff` in the code repository. The arXiv identifier will be added after the
+manuscript is public.
 
 ## License
 
-Code: Apache-2.0. Weights: TBD — see `LICENSES.md`; they are derived from
-DFN2B-CLIP ViT-B/16, so the released license must be compatible with the base model's terms.
+Project code: Apache-2.0. Third-party code retains its upstream licenses; see
+`LICENSES.md`. Model checkpoints are distributed separately and use the terms
+specified with the checkpoint.

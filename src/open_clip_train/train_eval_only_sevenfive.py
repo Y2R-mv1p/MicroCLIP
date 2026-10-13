@@ -55,7 +55,7 @@ from open_clip_train.metaclip_balance import MetaClipBalanceFilter, load_counts
 _LOGGER = logging.getLogger(__name__)
 _FAULT_LOG_FILES = []
 
-# The five classification evaluation splits (canonical MicroPool811 ordering).
+# The five classification evaluation splits used by the original integrated workflow.
 CLASSIFICATION_SPLITS = ["iid", "partial_ood", "ood", "cell_ood", "structure_ood"]
 
 TRAIN_ONLY_METRICS_FIELDS = [
@@ -136,7 +136,7 @@ BEST_CHECKPOINT_FILENAMES.update(
 )
 
 
-def parse_args():
+def parse_args(training_only=False):
     parser = argparse.ArgumentParser(
         description=(
             "Train CLIP, evaluate IID/partial-OOD/OOD/cell-OOD/structure-OOD classification and "
@@ -173,65 +173,69 @@ def parse_args():
     parser.add_argument("--csv-caption-key", default="title")
     parser.add_argument("--csv-separator", default="\t")
     parser.add_argument("--template", default="{name}")
-    parser.add_argument("--iid-data", required=True, help="IID classification evaluation TSV or WebDataset tar.")
-    parser.add_argument(
-        "--partial-ood-data",
-        required=True,
-        help="Partial-OOD classification evaluation TSV or WebDataset tar.",
-    )
-    parser.add_argument("--ood-data", required=True, help="OOD classification evaluation TSV or WebDataset tar.")
-    parser.add_argument(
-        "--cell-ood-data",
-        required=True,
-        help="Cell-only OOD classification evaluation TSV or WebDataset tar.",
-    )
-    parser.add_argument(
-        "--structure-ood-data",
-        required=True,
-        help="Structure-only OOD classification evaluation TSV or WebDataset tar.",
-    )
-    parser.add_argument(
-        "--retrieval-data",
-        required=True,
-        help="WebDataset tar used for both image-to-text and text-to-image retrieval evaluation.",
-    )
-    parser.add_argument(
-        "--retrieval-data-1000",
-        default="",
-        help="Optional second WebDataset tar for retrieval evaluation (e.g. the 1000-pool). "
-        "Reported as retrieval_1000_* top1/top5 metrics only; never used for best-checkpoint selection.",
-    )
-    parser.add_argument(
-        "--retrieval-text-source",
-        choices=["txt", "json"],
-        default="json",
-        help="Use the WebDataset .txt text or a field from .json for retrieval.",
-    )
-    parser.add_argument("--retrieval-json-key", default="long_caption")
-    parser.add_argument(
-        "--fallback-to-txt",
-        action="store_true",
-        help="Use .txt when the configured retrieval JSON field is missing or empty.",
-    )
-    parser.add_argument(
-        "--classification-best-metric",
-        choices=["top1", "top5", "macro_top1", "macro_top5", "macro_f1", "weighted_f1"],
-        default="top1",
-        help="Metric used independently to select the best IID, partial-OOD, and OOD checkpoints.",
-    )
-    parser.add_argument(
-        "--itot-best-metric",
-        choices=["i2t_r1", "i2t_r5", "i2t_r10"],
-        default="i2t_r1",
-        help="Metric used to select best_ItoT.pt.",
-    )
-    parser.add_argument(
-        "--ttoi-best-metric",
-        choices=["t2i_r1", "t2i_r5", "t2i_r10"],
-        default="t2i_r1",
-        help="Metric used to select best_TtoI.pt.",
-    )
-    parser.add_argument("--similarity-chunk-size", type=int, default=4096)
+    if training_only:
+        parser.description = "Train MicroCLIP without evaluation datasets."
+        parser.set_defaults(eval_batch_size=None, similarity_chunk_size=4096)
+    else:
+        parser.add_argument("--iid-data", required=True, help="IID classification evaluation TSV or WebDataset tar.")
+        parser.add_argument(
+            "--partial-ood-data",
+            required=True,
+            help="Partial-OOD classification evaluation TSV or WebDataset tar.",
+        )
+        parser.add_argument("--ood-data", required=True, help="OOD classification evaluation TSV or WebDataset tar.")
+        parser.add_argument(
+            "--cell-ood-data",
+            required=True,
+            help="Cell-only OOD classification evaluation TSV or WebDataset tar.",
+        )
+        parser.add_argument(
+            "--structure-ood-data",
+            required=True,
+            help="Structure-only OOD classification evaluation TSV or WebDataset tar.",
+        )
+        parser.add_argument(
+            "--retrieval-data",
+            required=True,
+            help="WebDataset tar used for both image-to-text and text-to-image retrieval evaluation.",
+        )
+        parser.add_argument(
+            "--retrieval-data-1000",
+            default="",
+            help="Optional second WebDataset tar for retrieval evaluation (e.g. the 1000-pool). "
+            "Reported as retrieval_1000_* top1/top5 metrics only; never used for best-checkpoint selection.",
+        )
+        parser.add_argument(
+            "--retrieval-text-source",
+            choices=["txt", "json"],
+            default="json",
+            help="Use the WebDataset .txt text or a field from .json for retrieval.",
+        )
+        parser.add_argument("--retrieval-json-key", default="long_caption")
+        parser.add_argument(
+            "--fallback-to-txt",
+            action="store_true",
+            help="Use .txt when the configured retrieval JSON field is missing or empty.",
+        )
+        parser.add_argument(
+            "--classification-best-metric",
+            choices=["top1", "top5", "macro_top1", "macro_top5", "macro_f1", "weighted_f1"],
+            default="top1",
+            help="Metric used independently to select the best IID, partial-OOD, and OOD checkpoints.",
+        )
+        parser.add_argument(
+            "--itot-best-metric",
+            choices=["i2t_r1", "i2t_r5", "i2t_r10"],
+            default="i2t_r1",
+            help="Metric used to select best_ItoT.pt.",
+        )
+        parser.add_argument(
+            "--ttoi-best-metric",
+            choices=["t2i_r1", "t2i_r5", "t2i_r10"],
+            default="t2i_r1",
+            help="Metric used to select best_TtoI.pt.",
+        )
+        parser.add_argument("--similarity-chunk-size", type=int, default=4096)
     parser.add_argument(
         "--train-long-caption-key",
         default=None,
@@ -621,7 +625,7 @@ class WdsImageTextMapper:
         ``_and_`` by the lookup, and each component's caption is concatenated.
         The original title template (prefix, ``_of_`` separator, suffix) is preserved
         whenever the canonical names can be located inside the title; otherwise the
-        canonical MicroPool811 template is used.
+        canonical MicroPool-2M template is used.
         """
         if self.semantic_lookup is None or not title:
             return title

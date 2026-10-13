@@ -1,0 +1,237 @@
+{
+  "hero": [
+    {
+      "src": "assets/microscopy/hero/01_Nucleoplasm_of_HeLa.jpg",
+      "width": 800,
+      "height": 800,
+      "structure": "Nucleoplasm",
+      "cell": "HeLa",
+      "note": "pseudocolor (GFP/DAPI/RFP); morphology distinct"
+    },
+    {
+      "src": "assets/microscopy/hero/02_Mitochondria_of_HeLa.jpg",
+      "width": 800,
+      "height": 800,
+      "structure": "Mitochondria",
+      "cell": "HeLa",
+      "note": "pseudocolor (GFP/DAPI/RFP); morphology distinct"
+    },
+    {
+      "src": "assets/microscopy/hero/03_Nuclear_speckles_of_U2OS.jpg",
+      "width": 800,
+      "height": 800,
+      "structure": "Nuclear speckles",
+      "cell": "U2OS",
+      "note": "pseudocolor (GFP/DAPI/RFP); morphology distinct"
+    },
+    {
+      "src": "assets/microscopy/hero/04_Mitochondria_and_Nucleoplasm_of_U2OS.jpg",
+      "width": 800,
+      "height": 800,
+      "structure": "Mitochondria + Nucleoplasm",
+      "cell": "U2OS",
+      "note": "pseudocolor (GFP/DAPI/RFP); morphology distinct"
+    }
+  ],
+  "supervision": [
+    {
+      "id": "Actin_filaments_and_Cytosol_of_U251MG",
+      "src": "assets/microscopy/supervision/Actin_filaments_and_Cytosol_of_U251MG.jpg",
+      "width": 640,
+      "height": 640,
+      "structure": "Actin filaments and Cytosol",
+      "cell": "U251MG",
+      "category": "a microscopy photo of Actin_filaments_and_Cytosol_of_U251MG",
+      "detail": "This monochrome fluorescence micrograph illustrates the Actin_filaments_and_Cytosol distribution within a clustered population of U-251_MG cells. The image is characterized by a dark, low-noise background that provides high contrast for the biological structures, which are arranged in a dense, overlapping formation occupying the majority of the field of view. The fluorescent signal manifests as a pervasive, granular texture throughout the cytoplasmic regions, creating a stippled appearance rather than distinct, continuous filamentous bundles. The cellular boundaries are largely defined by the termination of this speckled intensity, resulting in a cohesive, reticulated mass where individual cell margins are partially obscured by the density of the culture. Several discrete, hyper-intense punctate spots are visible within the brighter cellular regions, standing out against the more diffuse, mid-gray signal of the surrounding cytosol. The overall morphology suggests a confluent monolayer or aggregate where the cytoskeletal and cytoplasmic components are distributed extensively across the visible cell bodies.",
+      "knowledge": "Actin filaments are cytoskeletal polymers associated with the cell cortex and cytoplasm and are generally involved in mechanical support, cell motility, adhesion, intracellular transport, and cytokinesis. Cytosol is the aqueous component of the cytoplasm outside membrane-bound organelles and is generally involved in metabolism, signal transduction, and protein synthesis. U251MG cells originate from human brain tumor tissue, belong to the glial astrocytic lineage, and are classified as a malignant glioblastoma cell line; they are generally characterized by glial properties, a mutant TP53 background, and sustained proliferative capacity."
+    },
+    {
+      "id": "Mitochondria_of_A549",
+      "src": "assets/microscopy/supervision/Mitochondria_of_A549.jpg",
+      "width": 640,
+      "height": 640,
+      "structure": "Mitochondria",
+      "cell": "A549",
+      "category": "a microscopy photo of Mitochondria_of_A549",
+      "detail": "This monochrome fluorescence micrograph illustrates the mitochondria distribution within a dense population of A549 cells. The image is characterized by a high-contrast signal against a uniformly dark background, highlighting specific subcellular regions while leaving the interstitial spaces largely devoid of fluorescence. The field of view reveals a confluent arrangement of cells where individual boundaries are not sharply defined, suggesting a tightly packed monolayer. Within the cellular clusters, the fluorescence signal manifests as a complex, reticular network of varying intensity, appearing as granular aggregates and interconnected strands rather than distinct, isolated organelles. This texture suggests a widespread cytoplasmic distribution of the targeted structures. The signal intensity is heterogeneous across the field, with certain regions displaying brighter, more concentrated accumulations of fluorescence, while others exhibit a fainter, more diffuse pattern. There is no evidence of distinct nuclear exclusion or specific perinuclear localization visible at this magnification, as the signal appears to permeate the available cytoplasmic volume of the cell clusters.",
+      "knowledge": "Mitochondria are cytoplasmic membrane-bound organelles generally involved in ATP production through oxidative phosphorylation, intermediary metabolism, calcium homeostasis, and regulated cell death. A549 cells originate from human lung adenocarcinoma tissue, belong to an alveolar epithelial lineage, and are classified as a malignant cancer cell line; they are generally characterized by type II pneumocyte-associated functions, surfactant-related protein expression, and an activating KRAS mutation."
+    }
+  ],
+  "gallery": [],
+  "retrieval": [
+    {
+      "id": "case-1",
+      "title": "Microtubules + nucleoli",
+      "cell": "U2OS",
+      "query": "This monochrome fluorescence micrograph illustrates the microtubules and nucleoli fibrillar center distribution within a moderately confluent population of U-2 OS cells. The image presents a high-contrast field of view set against a uniform, non-fluorescent black background, ensuring that the cellular structures are clearly delineated. The cells exhibit characteristic osteosarcoma morphology, appearing as flattened, irregularly shaped entities that spread across the substrate, with distinct boundaries separating individual cells while maintaining close proximity in a monolayer arrangement. The fluorescence signal reveals a complex, filamentous network throughout the cytoplasm, consistent with the structural organization of the cytoskeleton. This signal is particularly intense in the perinuclear regions and extends outward toward the cell margins in a fibrous, reticular pattern, suggesting a dense array of cytoplasmic filaments. Within the central regions of the cells, darker, roughly ovoid voids are visible, corresponding to the nuclei, which appear largely devoid of the filamentous signal that dominates the surrounding cytoplasm. The overall texture of the signal is granular yet interconnected, highlighting the intricate architecture of the intracellular environment without evidence of significant background noise or imaging artifacts.",
+      "checkpoint": "epoch015",
+      "pool": 1000,
+      "results": [
+        {
+          "src": "assets/microscopy/retrieval/case-1/rank-01.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 1,
+          "score": "0.4149",
+          "rawLabel": "Microtubules_and_Nucleoli_fibrillar_center_of_U-2_OS_6",
+          "structure": "Microtubules and Nucleoli fibrillar center",
+          "cell": "U2OS",
+          "sampleId": "6",
+          "groundTruth": true
+        },
+        {
+          "src": "assets/microscopy/retrieval/case-1/rank-02.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 2,
+          "score": "0.3229",
+          "rawLabel": "Cytokinetic_bridge_and_Microtubules_and_Nucleoli_fibrillar_center_of_U-2_OS_1",
+          "structure": "Cytokinetic bridge and Microtubules and Nucleoli fibrillar center",
+          "cell": "U2OS",
+          "sampleId": "1",
+          "groundTruth": false
+        },
+        {
+          "src": "assets/microscopy/retrieval/case-1/rank-03.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 3,
+          "score": "0.3145",
+          "rawLabel": "Actin_filaments_and_Nucleoli_fibrillar_center_of_U-2_OS_1",
+          "structure": "Actin filaments and Nucleoli fibrillar center",
+          "cell": "U2OS",
+          "sampleId": "1",
+          "groundTruth": false
+        },
+        {
+          "src": "assets/microscopy/retrieval/case-1/rank-04.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 4,
+          "score": "0.3128",
+          "rawLabel": "Microtubules_and_Nuclear_bodies_of_U-2_OS_5",
+          "structure": "Microtubules and Nuclear bodies",
+          "cell": "U2OS",
+          "sampleId": "5",
+          "groundTruth": false
+        },
+        {
+          "src": "assets/microscopy/retrieval/case-1/rank-05.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 5,
+          "score": "0.3042",
+          "rawLabel": "Cytosol_and_Microtubule_organizing_center_and_Microtubules_of_U-2_OS_4",
+          "structure": "Cytosol and Microtubule organizing center and Microtubules",
+          "cell": "U2OS",
+          "sampleId": "4",
+          "groundTruth": false
+        }
+      ]
+    },
+    {
+      "id": "case-2",
+      "title": "Endoplasmic reticulum + intermediate filaments",
+      "cell": "A431",
+      "query": "This monochrome fluorescence micrograph illustrates the Endoplasmic_reticulum_and_Intermediate_filaments distribution within a confluent population of A-431 cells. The image presents a high-contrast field of view where distinct cellular boundaries are clearly delineated against a uniformly dark background, indicating specific labeling of cytoplasmic structures. The fluorescence signal manifests as a dense, granular, and reticular texture that permeates the cytoplasm, extending from the perinuclear region toward the cell periphery. This staining pattern creates a visible exclusion zone around the central, hypointense nuclei, which appear as dark, circular voids within the brighter cellular bodies. The cells are tightly packed, forming a continuous monolayer where the cytoplasmic texture of adjacent cells abuts without significant intercellular spacing. The signal intensity is heterogeneous, characterized by irregular grayscale variations that highlight the complex internal architecture of the cytosol.",
+      "checkpoint": "epoch015",
+      "pool": 1000,
+      "results": [
+        {
+          "src": "assets/microscopy/retrieval/case-2/rank-01.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 1,
+          "score": "0.4091",
+          "rawLabel": "Endoplasmic_reticulum_and_Intermediate_filaments_of_A-431_1",
+          "structure": "Endoplasmic reticulum and Intermediate filaments",
+          "cell": "A431",
+          "sampleId": "1",
+          "groundTruth": true
+        },
+        {
+          "src": "assets/microscopy/retrieval/case-2/rank-02.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 2,
+          "score": "0.3276",
+          "rawLabel": "Endoplasmic_reticulum_and_Intermediate_filaments_of_U-251_MG_1",
+          "structure": "Endoplasmic reticulum and Intermediate filaments",
+          "cell": "U251MG",
+          "sampleId": "1",
+          "groundTruth": false
+        },
+        {
+          "src": "assets/microscopy/retrieval/case-2/rank-03.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 3,
+          "score": "0.3054",
+          "rawLabel": "er_of_A549_348",
+          "structure": "Endoplasmic reticulum",
+          "cell": "A549",
+          "sampleId": "348",
+          "groundTruth": false
+        },
+        {
+          "src": "assets/microscopy/retrieval/case-2/rank-04.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 4,
+          "score": "0.3001",
+          "rawLabel": "Endoplasmic_reticulum_of_A-431_104",
+          "structure": "Endoplasmic reticulum",
+          "cell": "A431",
+          "sampleId": "104",
+          "groundTruth": false
+        },
+        {
+          "src": "assets/microscopy/retrieval/case-2/rank-05.jpg",
+          "width": 384,
+          "height": 384,
+          "rank": 5,
+          "score": "0.2912",
+          "rawLabel": "Nucleoli_and_Intermediate_filaments_of_HeLa_1",
+          "structure": "Nucleoli and Intermediate filaments",
+          "cell": "HeLa",
+          "sampleId": "1",
+          "groundTruth": false
+        }
+      ]
+    }
+  ],
+  "composition": [
+    {
+      "src": "assets/microscopy/composition/01_Nucleus_of_U2OS__seen.jpg",
+      "width": 512,
+      "height": 512,
+      "structure": "Nucleus",
+      "cell": "U2OS",
+      "status": "seen"
+    },
+    {
+      "src": "assets/microscopy/gallery/Nucleus_of_BJ.jpg",
+      "width": 512,
+      "height": 512,
+      "structure": "Nucleus",
+      "cell": "BJ",
+      "status": "unseen"
+    },
+    {
+      "src": "assets/microscopy/gallery/Endoplasmic_reticulum_of_U2OS.jpg",
+      "width": 512,
+      "height": 512,
+      "structure": "Endoplasmic reticulum",
+      "cell": "U2OS",
+      "status": "seen"
+    },
+    {
+      "src": "assets/microscopy/composition/04_Endoplasmic_reticulum_of_BJ__unseen.jpg",
+      "width": 512,
+      "height": 512,
+      "structure": "Endoplasmic reticulum",
+      "cell": "BJ",
+      "status": "unseen"
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 # forward pass? No GPU, no dataset download and no checkpoint required.
 #
 #   bash scripts/smoke_test.sh              # code paths only (runs in CI)
-#   bash scripts/smoke_test.sh --with-data  # also resolve every dataset path
+#   bash scripts/smoke_test.sh --with-data  # verify reconstructed paper evaluation data
 #
 # Exits non-zero on the first failure.
 # =============================================================================
@@ -57,25 +57,17 @@ EOF
 pass "forward pass"
 
 echo "[4/5] shell entry points parse"
-for script in train.sh paths.sh; do
+for script in train.sh train_DFN_B16.sh eval.sh paths.sh MicroPool/build.sh; do
   bash -n "${script}" || fail "${script} syntax"
 done
-bash -n scripts/download_datasets.sh || fail "download_datasets.sh syntax"
 pass "shell syntax"
 
 echo "[5/5] dataset paths"
 if [[ "${WITH_DATA}" == "1" ]]; then
-  # shellcheck disable=SC1091
-  source ./paths.sh
-  for var in WDS_TRAIN WDS_VLM WDS_AUG IID_DATA PARTIAL_OOD_DATA OOD_DATA CELL_OOD_DATA STRUCTURE_OOD_DATA RETRIEVAL_DATA RETRIEVAL_DATA_1000; do
-    value="${!var:-}"
-    [[ -n "${value}" ]] || fail "${var} is unset (set MICRO_DATA_ROOT)"
-    count=$(eval "ls ${value}" 2>/dev/null | wc -l)
-    [[ "${count}" -gt 0 ]] || fail "${var} does not resolve: ${value}"
-    printf '  ok   %-20s %s file(s)\n' "${var}" "${count}"
-  done
+  [[ -n "${MICRO_EVAL_ROOT:-}" ]] || fail "set MICRO_EVAL_ROOT to the reconstructed evaluation root"
+  MICRO_PYTHON="${PYTHON}" bash MicroPool/build.sh --root "${MICRO_EVAL_ROOT}" --stage verify
 else
-  echo "  skipped (pass --with-data to resolve every path from MICRO_DATA_ROOT)"
+  echo "  skipped (set MICRO_EVAL_ROOT and pass --with-data to verify evaluation data)"
 fi
 
 echo

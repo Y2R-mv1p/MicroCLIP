@@ -34,11 +34,11 @@ from open_clip_train.data import tarfile_to_samples_nothrow
 _LOGGER = logging.getLogger(__name__)
 
 DEFAULT_EVAL_SPLITS = {
-    "iid": "/data2/ryr/MicroPool811/webdataset/wds_eval_iid/shard-000000.tar",
-    "partial_ood": "/data2/ryr/MicroPool811/webdataset/wds_eval_partial_ood/shard-000000.tar",
-    "ood": "/data2/ryr/MicroPool811/webdataset/wds_eval_ood/shard-000000.tar",
-    "cell_ood": "/data2/ryr/MicroPool811/webdataset/wds_eval_cell_ood/shard-000000.tar",
-    "structure_ood": "/data2/ryr/MicroPool811/webdataset/wds_eval_structure_ood/shard-000000.tar",
+    "iid": "evaluation/iid/shard-000000.tar",
+    "partial_ood": "evaluation/compositional_shift/shard-000000.tar",
+    "ood": "evaluation/ood/shard-000000.tar",
+    "cell_ood": "evaluation/cell_line_shift/shard-000000.tar",
+    "structure_ood": "evaluation/organelle_set_shift/shard-000000.tar",
 }
 
 CLASSIFICATION_SPLITS = ["iid", "partial_ood", "ood", "cell_ood", "structure_ood"]

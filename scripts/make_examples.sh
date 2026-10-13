@@ -5,7 +5,7 @@
 #
 #   bash scripts/make_examples.sh <shard.tar> [count] [outdir]
 #
-# Defaults: 3 images from MicroPool811/webdataset/wds_train/shard-000000.tar
+# Defaults: 3 images from training/microscopy/shard-000000.tar
 # written to examples/, together with the matching class titles.
 # =============================================================================
 set -euo pipefail
@@ -13,7 +13,12 @@ set -euo pipefail
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 cd "${SCRIPT_DIR}"
 
-SHARD="${1:-${MICRO_DATA_ROOT:-/data2/ryr}/MicroPool811/webdataset/wds_train/shard-000000.tar}"
+if [[ -z "${1:-}" && -z "${MICRO_DATA_ROOT:-}" ]]; then
+  echo "usage: bash scripts/make_examples.sh /path/to/shard-000000.tar [count] [output-dir]" >&2
+  echo "   or: MICRO_DATA_ROOT=/path/to/data bash scripts/make_examples.sh" >&2
+  exit 1
+fi
+SHARD="${1:-${MICRO_DATA_ROOT}/training/microscopy/shard-000000.tar}"
 COUNT="${2:-3}"
 OUTDIR="${3:-${SCRIPT_DIR}/examples}"
 

@@ -1,20 +1,56 @@
-# MicroCLIP
+<div align="center">
+  <img src="docs/assets/microclip-cell.png" width="100" alt="MicroCLIP cell mascot">
+  <h1>MicroCLIP</h1>
+  <p><strong>Connecting Text and Microscopy Images<br>via Contrastive Language–Image Pretraining</strong></p>
+  <p>Describe the biology. Search the cells.</p>
+  <p>
+    <a href="https://y2r-mv1p.github.io/MicroCLIP/"><img src="https://img.shields.io/badge/Project_Page-MicroCLIP-008C95" alt="MicroCLIP project page"></a>
+    <a href="https://github.com/Y2R-mv1p/MicroCLIP"><img src="https://img.shields.io/badge/Code-GitHub-5367C8" alt="MicroCLIP code on GitHub"></a>
+  </p>
+  <p>
+    <a href="#highlights">Highlights</a> ·
+    <a href="#results">Results</a> ·
+    <a href="#quickstart">Quickstart</a> ·
+    <a href="#micropool-2m">Dataset</a> ·
+    <a href="#method-overview">Method</a> ·
+    <a href="#training">Training</a> ·
+    <a href="#evaluation">Evaluation</a> ·
+    <a href="https://y2r-mv1p.github.io/MicroCLIP/">Project page</a>
+  </p>
+</div>
 
-**A 150M-parameter CLIP model for fluorescence microscopy.**
-MicroCLIP reaches **98.46% in-domain zero-shot classification** over 2,032 microscopy categories and **67.70% / 34.07% / 46.13%** under compositional, cell-line, and organelle-set shift — while every general-purpose vision–language model we compare against stays below 7.63% on those splits. It also supports cross-modal retrieval (**61.5% I2T / 63.3% T2I Recall@1**), where frozen general-purpose VLMs sit below 0.7%.
+<p align="center">
+  <a href="https://y2r-mv1p.github.io/MicroCLIP/"><img src="docs/assets/dataset.jpg" width="100%" alt="Fluorescence microscopy image mosaic spelling MicroCLIP."></a>
+</p>
 
-MicroCLIP is fine-tuned from [DFN2B-CLIP ViT-B/16](https://huggingface.co/apple/DFN2B-CLIP-ViT-B-16) on **MicroPool-2M**, a 2.5M-image corpus of single-channel fluorescence micrographs paired with three levels of text (category title, per-image description, biological knowledge).
+**We introduce MicroCLIP for language-guided recognition and retrieval in single-channel fluorescence microscopy.** We initialize both encoders from DFN2B-CLIP ViT-B/16 and train on approximately **2.5 million microscopy images** to learn a shared representation of microscopy appearance, subcellular structures, and cell-line semantics.
 
-> Paper: **TBD (arXiv link pending)** · Weights: **TBD (Hugging Face)** · Dataset: **TBD (Hugging Face)**
+<p align="center">
+  <img src="docs/assets/teaser.jpg" width="100%" alt="MicroCLIP connects microscopy images with text, recognizes unseen structure–cell-line combinations, and retrieves images using natural-language descriptions.">
+</p>
 
----
+<p align="center"><em>Learn biological factors from seen pairs. Recognize unseen combinations. Retrieve images with text.</em></p>
+
+## Highlights
+
+| Recognize cells | Generalize across combinations | Search with language | Compact dual encoder |
+|:---:|:---:|:---:|:---:|
+| **98.46%** IID Top-1 | **67.70%** compositional Top-1 | **63.3%** text-to-image Recall@1 | **150M** parameters |
+| 59 candidate categories | 64 held-out structure–cell-line pairs | 1,000 image–caption candidates | ViT-B/16 · 256-token context |
+
+- **Specify recognition targets with text.** Rank candidate structure–cell-line categories without fitting a task-specific classifier.
+- **Recognize combinations absent from training.** On Compositional Shift, MicroCLIP reaches **67.70%**, versus **5.12%** for the strongest evaluated general-purpose VLM.
+- **Retrieve in both directions.** Search micrographs using descriptions, or find descriptions for a query image: **61.5% I2T / 63.3% T2I Recall@1**.
+- **Train with three complementary views of biology.** Category identities, image-level visual details, and biological knowledge provide complementary text supervision.
+
+We report these results in our experiments. Classification ranks candidates **within each evaluation subset**; 98.46% is measured on the 59-category IID subset.
 
 ## Results
 
-Zero-shot classification Top-1 (%) and retrieval Recall@1 (%) on the 1,000-pair pool. All MicroCLIP numbers are read from a single checkpoint (epoch 15, selected by mean Top-1 over the five classification splits); baselines use released weights with their native text configuration, no microscopy adaptation and no prompt ensembling.
+Classification is **Top-1 accuracy (%)**. Retrieval is **Recall@1 (%)** over **1,000 held-out image–caption pairs**, using detail-level captions. We evaluate general-purpose VLMs using their released weights and native configurations, without microscopy adaptation or prompt ensembling.
 
 | Method | Params | IID | Compositional | Cell-Line | Organelle-Set | Source Shift | I2T | T2I |
-|---|---|---|---|---|---|---|---|---|
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Fully supervised classifier | — | 97.74 | — | — | — | — | — | — |
 | Cell-DINO | 304M | 36.06 | 0.98 | — | — | — | — | — |
 | CLIP (OpenAI ViT-B/16) | 150M | 2.97 | 5.12 | 1.80 | 2.54 | 8.38 | 0.7 | 0.2 |
@@ -24,181 +60,184 @@ Zero-shot classification Top-1 (%) and retrieval Recall@1 (%) on the 1,000-pair 
 | DFN2B-CLIP (ViT-B/16) | 150M | 1.44 | 1.41 | 4.32 | 0.81 | 16.49 | 0.5 | 0.1 |
 | **MicroCLIP** | **150M** | **98.46** | **67.70** | **34.07** | **46.13** | **36.53** | **61.5** | **63.3** |
 
-*Source Shift* is the external [Light My Cells](https://doi.org/10.1038/s41592-026-0000-0) benchmark (1,158 images, 13 classes). Classification splits are balanced at 100 images per class; see [Datasets](#datasets) for split definitions.
+The supervised classifier and Cell-DINO use different evaluation protocols from text-guided zero-shot methods. Source Shift contains 1,158 images from 13 categories in Light My Cells (S-BIAD1047). Organelle-Set Shift holds out complete structure labels, which can be composite.
 
-## Install
+## Quickstart
+
+### 1. Install
+
+The commands below use Linux or WSL with Bash:
 
 ```bash
-git clone <REPO_URL> MicroCLIP && cd MicroCLIP
-python -m venv .venv && source .venv/bin/activate
+cd MicroCLIP
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-
-# The vendored open_clip fork (custom 256-token text context) ships in src/.
 export PYTHONPATH="$PWD/src:$PYTHONPATH"
 ```
 
-The training environment this release was validated against is pinned in `requirements.txt` (Python 3.13, PyTorch 2.12, CUDA 13). A single CUDA GPU with ≥16 GB is enough for inference; training used 8× 72 GB GPUs.
+We provide a modified OpenCLIP implementation under `src/` to support a 256-token text context. Choose a PyTorch build compatible with your CUDA driver; CPU inference is also supported.
 
-## Inference
+We provide `inference.py` to load a **MicroCLIP checkpoint** for inference and evaluation. It constructs the ViT-B/16 model with a 256-token text context, then loads the checkpoint directly. We use `pretrained=None` during inference because our MicroCLIP checkpoint already contains the trained parameters of both encoders, so the initial DFN2B weights do not need to be loaded separately.
 
-`inference.py` loads a released checkpoint and runs zero-shot classification and image/text embedding, with no dataset download required.
+### 2. Classify your own micrographs
 
 ```bash
-# No example images are shipped with the repository; pull a few out of a dataset
-# shard to try the quickstart immediately:
-bash scripts/make_examples.sh /path/to/wds_train/shard-000000.tar 3 examples
-
 python inference.py \
-  --checkpoint /path/to/microclip_epoch015.pt \
-  --images examples/00000000.jpg examples/00000001.jpg \
-  --classes "a microscopy photo of ACTB_of_A549" \
-            "a microscopy photo of Nucleus_of_HeLa" \
-            "a microscopy photo of Mitochondria_of_U2OS"
+  --checkpoint /path/to/microclip_epoch015.safetensors \
+  --images /path/to/cell_01.png /path/to/cell_02.png \
+  --classes "a microscopy photo of Nucleus_of_HeLa" \
+            "a microscopy photo of Actin_filaments_of_HeLa" \
+            "a microscopy photo of Mitochondria_of_HeLa"
 ```
 
-Class strings are the **full L1 title**, not a bare label: `a microscopy photo of {structure}_of_{cell}`. Structure and cell names use the corpus vocabulary (e.g. `Nucleus`, `Actin_filaments`, `Plasma_membrane`; `HeLa`, `A549`, `U2OS`), with composite structures joined by `_and_` (e.g. `F_actin_and_Plasma_membrane`).
+Classification uses full category titles in the form `a microscopy photo of {structure}_of_{cell}`. Names follow the corpus vocabulary; composite structures use `_and_`. Scores are relative to the supplied candidates and are not calibrated biological confidence estimates.
 
-As a library:
+### 3. Search images with text
+
+Both encoders return L2-normalized embeddings, so their dot product is cosine similarity:
 
 ```python
 import inference
 
-model, preprocess, tokenizer = inference.load_model("microclip_epoch015.pt", device="cuda")
-image_features = inference.encode_images(model, preprocess, ["my_cell.png"], device="cuda")
-text_features = inference.encode_texts(model, tokenizer, ["a microscopy photo of Nucleus_of_HeLa"], device="cuda")
+device = "auto"
+model, preprocess, tokenizer = inference.load_model(
+    "microclip_epoch015.safetensors", device=device, strict=True
+)
+images = ["cell_01.png", "cell_02.png", "cell_03.png"]
+queries = ["A fluorescence micrograph showing a compact nucleus in a HeLa cell."]
+image_features = inference.encode_images(model, preprocess, images, device=device)
+text_features = inference.encode_texts(model, tokenizer, queries, device=device)
+ranking = (text_features @ image_features.T)[0].argsort(descending=True)
 ```
 
-Both towers return L2-normalized features, so cosine similarity is a plain dot product — use them directly for retrieval, clustering, or as a frozen encoder for linear probes.
+## MicroPool-2M
 
-## Checkpoints
+We curate MicroPool-2M with **3,301,672 images** and **3,391 observed structure–cell-line pairs**. After data cleaning and split construction, our training split contains **2,505,017 micrographs across 2,032 structure–cell-line categories**, with three levels of text supervision.
 
-| Checkpoint | Init. | Size | Notes |
-|---|---|---|---|
-| `microclip_epoch015.safetensors` | DFN2B-CLIP ViT-B/16 | 299 MB | The released model (fp16). Every number in the table above comes from these weights. |
+| Text level | What it adds | Implementation |
+|---|---|---|
+| Category | Subcellular structure and cell-line identity | L1 template title |
+| Detail | Fluorescence patterns and image-specific morphology | L2 per-image long caption |
+| Knowledge | Biological properties of structures and cell lines | L3 semantic rewrite from knowledge tables |
 
-The artifact is produced from the training checkpoint with the bundled converter:
+### Evaluation splits
+
+| Split | Candidate categories | Images | Generalization target |
+|---|---:|---:|---|
+| IID | 59 | 5,900 | New images of seen structure–cell-line pairs |
+| Compositional Shift | 64 | 6,400 | Unseen pairings of seen structures and cell lines |
+| Cell-Line Shift | 59 | 5,900 | Held-out cell lines |
+| Organelle-Set Shift | 54 | 5,400 | Held-out complete structure labels |
+| Source Shift | 13 | 1,158 | External acquisition source: Light My Cells |
+
+We provide the bundled [`MicroPool/`](MicroPool/README.md) package to reconstruct our fixed **evaluation datasets** from original sources and verify every resulting sample against frozen manifests. It contains no third-party image bytes and does not reconstruct the 2.5M-image training corpus.
+
+The training layout uses descriptive names:
+
+```text
+MICRO_DATA_ROOT/
+└── training/
+    ├── microscopy/     # Base microscopy corpus
+    ├── auxiliary/      # Auxiliary natural-image records
+    └── augmentation/   # Rare-class transformed copies
+```
+
+Every path can also be overridden independently with `WDS_TRAIN`, `WDS_VLM`, or `WDS_AUG`.
+
+To reconstruct the evaluation data:
 
 ```bash
-python tools/convert_checkpoint.py checkpoints/epochs/epoch_015.pt \
-    -o microclip_epoch015.safetensors --format safetensors --dtype fp16   # 299 MB
-# or, for the full-precision fp32 state_dict:
-python tools/convert_checkpoint.py checkpoints/epochs/epoch_015.pt -o microclip_epoch015.pt  # 599 MB
+pip install -r MicroPool/requirements.txt
+bash MicroPool/build.sh --root /path/to/micropool-eval --stage plan
+
+# Supply the local inputs reported by plan.json, then build and verify:
+bash MicroPool/build.sh --root /path/to/micropool-eval \
+  --prepared-root /path/to/existing/FluoGen_data_JPG \
+  --raw-root /path/to/official/raw/files
 ```
 
-**TBD (Hugging Face)** — until the weights are uploaded, the checkpoint is `checkpoints/epochs/epoch_015.pt` from the training run (599 MB; shape-compatible with `ViT-B-16` + `force_context_length=256`). `inference.py` loads either format.
+See the [MicroPool guide](MicroPool/README.md) and [source notes](MicroPool/docs/SOURCES.md) for the complete procedure.
 
-## Datasets
+## Method overview
 
-MicroPool-2M is released separately from this repository. `paths.sh` resolves every dataset from a single root:
+We train MicroCLIP with three-level text supervision, composition-aware balancing, rare-class augmentation, and auxiliary general-domain image–text pairs. The image and text encoders learn a shared representation through the CLIP contrastive objective.
 
-```bash
-export MICRO_DATA_ROOT=/path/to/containing/folder   # contains MicroPool811/, dataset_new/, data_retrieval/
-```
-
-| Component | Used by | Size | Link |
-|---|---|---|---|
-| `MicroPool811/webdataset/wds_train` | training (base corpus) | 2,498,617 images | **TBD (Hugging Face)** |
-| `dataset_new/webdataset/wds_vlm` | training (natural-image auxiliary) | 609,740 records | **TBD (Hugging Face)** |
-| `MicroPool811/webdataset/wds_train_aug` | training (rare-class augmentation) | 175,516 records | **TBD (Hugging Face)** |
-| `MicroPool811/webdataset/wds_eval_*` | the five evaluation splits | 30,000 images | **TBD (Hugging Face)** |
-| `data_retrieval/wds_eval_fluogen_100{0}` | retrieval pools (100 / 1,000 pairs) | 1,100 images | **TBD (Hugging Face)** |
-
-```bash
-# Convenience downloader (Hugging Face Hub; set HF_ENDPOINT for mirrors)
-bash scripts/download_datasets.sh /path/to/MICRO_DATA_ROOT
-```
-
-**MicroPool-2M in one paragraph.** 3,301,696 annotated single-channel fluorescence micrographs aggregated from public microscopy repositories (Human Protein Atlas, Image Data Resource, RxRx, Broad Bioimage Benchmark Collection) and curated literature, labeled by subcellular structure and cell line — 537 structure labels × 109 cell lines, of which 3,391 combinations (≈5.8% of the product space) carry images. A content-level (MD5) deduplication removes byte-identical duplicates so no image appears in two splits; 3,301,672 unique images are partitioned into a 2,498,617-image training split (1,968 classes, 489 structures, 32 cell lines), a 30,000-image evaluation ladder (five splits, 100 images per class), and a discarded surplus set. Each sample ships as a WebDataset record with a JPEG, the L1 template title, the L2 per-image long caption, and metadata. Splits are deterministic under a fixed seed and validated by an independent audit that re-derives the disjointness and per-class-count assertions from the released shards.
-
-| Evaluation split | Classes | Structures | Cell lines | Images | What is unseen |
-|---|---|---|---|---|---|
-| IID | 59 | 21 | 12 | 5,900 | nothing |
-| Compositional Shift | 64 | 16 | 16 | 6,400 | the (structure, cell) pairing |
-| Cell-Line Shift | 59 | 22 | 8 | 5,900 | the cell line |
-| Organelle-Set Shift | 54 | 29 | 6 | 5,400 | the structure label |
-| Source Shift (external) | 13 | 3 | 5 | 1,158 | the acquisition source |
+<p align="center">
+  <a href="docs/assets/framework.pdf">
+    <img src="docs/assets/framework.jpg" width="100%" alt="MicroCLIP framework: balanced microscopy sampling, category/detail/knowledge captions, image and text encoders, auxiliary image–text pairs, and contrastive alignment.">
+  </a>
+</p>
 
 ## Training
 
-```bash
-export MICRO_DATA_ROOT=/data2/ryr           # or wherever the datasets live
-ENABLE_VLM_MIX=1 ENABLE_AUG_MIX=1 bash train.sh
-```
-
-That single command trains, evaluates all seven splits every epoch, and keeps the best checkpoint per metric. On 8× 72 GB GPUs the released checkpoint (epoch 15) is reached in ≈25–28 h; the full 30-epoch schedule takes ≈55 h.
-
-The recipe (matching the paper): 12,000 updates, AdamW, global batch 8,192, peak LR 4e-5, 2,500 warmup steps, cosine decay, weight decay 0.2, bf16, 224×224 inputs, 256-token text context, both towers unfrozen.
-
-### Reproducing the numbers
-
-Every split in the table above is evaluated inside the training loop at the end of each
-epoch, so the canonical reproduction is a training run:
+We train MicroCLIP starting from DFN2B-CLIP ViT-B/16. Our canonical training launcher enables all four method modules by default; we provide a separate entry point for evaluation:
 
 ```bash
-MICRO_DATA_ROOT=/path/to/data ENABLE_VLM_MIX=1 ENABLE_AUG_MIX=1 bash train.sh
-# then read the per-epoch table the run writes:
-#   $OUTPUT_DIR/final_result/epoch_results.csv     (all seven splits, every epoch)
+MICRO_DATA_ROOT=/path/to/data bash train_DFN_B16.sh
 ```
 
-The released checkpoint is **epoch 15** of that run — the epoch with the best mean Top-1
-over the five classification splits (49.80%). Reproduce the table by reading row 15 of
-`epoch_results.csv`, or by evaluating the released weights with
-`src/open_clip_train/eval_checkpoint_tsv.py` when your classification data is in TSV form.
+In our launcher, we set the OpenCLIP architecture name to `ViT-B-16` and the default pretrained tag to `dfn2b`, which resolves to [apple/DFN2B-CLIP-ViT-B-16](https://huggingface.co/apple/DFN2B-CLIP-ViT-B-16). We initialize both the image and text encoders from these weights and train them on our MicroCLIP training mixture using a contrastive image–text objective. We use 224 × 224 images with 16 × 16 patches and extend the text context from 77 to 256 tokens. Our launcher downloads the initialization weights automatically on first use and caches them locally.
 
-> A standalone "load this checkpoint, score these shards" evaluator is **TODO(release)** —
-> today the classification splits can only be scored through the training entry point.
-> Open an issue if you need it; it is the first item on the release roadmap.
+| Setting | Our training recipe |
+|---|---|
+| Initialization | DFN2B-CLIP ViT-B/16; both encoders trained |
+| Input | 224 × 224 images; 256-token text context |
+| Text sampling | 50% category / 25% detail / 25% knowledge rewrite |
+| Data mixture | 2,505,017 microscopy + 609,740 auxiliary + 175,516 augmented records |
+| Optimizer | AdamW; peak LR 4e-5; weight decay 0.2 |
+| Schedule | 30 epochs (approximately 12,000 updates); 2,500 warmup steps; cosine decay |
+| Batch / precision | Global batch 8,192; bf16 |
+| Hardware / runtime | 8 × NVIDIA RTX PRO 5000 GPUs (72 GB each); approximately 55 hours |
 
-### Method modules
+Each epoch writes model weights to `$OUTPUT_DIR/checkpoints/epochs/epoch_XXX.pt`; `checkpoints/last.pt` also stores optimizer and scaler state for resuming. Keep `EPOCHS=30` to reproduce the original cosine schedule even if evaluating epoch 15.
 
-Four independent on/off switches live at the top of `train.sh`:
+## Evaluation
 
-| Switch | Default | Effect |
-|---|---|---|
-| `ENABLE_THREE_WAY_TEXT` | `1` | per-sample choice of L1 title / L2 long caption / L3 semantic rewrite (25/50/25) |
-| `ENABLE_META_BALANCE` | `1` | MetaCLIP-style online class balancing over the metadata vocabulary |
-| `ENABLE_VLM_MIX` | `0` | append the `wds_vlm` natural-image corpus |
-| `ENABLE_AUG_MIX` | `0` | append the `wds_train_aug` rare-class corpus |
+After reconstructing the evaluation root and obtaining a checkpoint:
 
-> ⚠️ **The paper's recipe has all four ON.** The released defaults leave the two data-mixing modules off so that the code runs with the base corpus alone; run with `ENABLE_VLM_MIX=1 ENABLE_AUG_MIX=1` to reproduce the published numbers. Toggling those two switches changes the training corpus, which invalidates the cached MetaCLIP class counts — the first run must either pass `METACLIP_FORCE_RECOUNT=1` or point `METACLIP_COUNTS_FILE` at a counts file built from the same corpus.
+```bash
+bash eval.sh --root /path/to/micropool-eval \
+  --checkpoint /path/to/microclip_epoch015.safetensors \
+  --device cuda --batch-size 64 \
+  --output /path/to/paper_evaluation.json
+```
 
-### Backbones
-
-The same method runs on other backbones for the scale study — `train_DFN_{B16,L14,H14}.sh`, `train_OpenAI_{B16,L14}.sh`, `train_SigLIP2_*.sh`, `train_PECore_*.sh`. Only the backbone and output directory change; data paths come from `paths.sh` and weights are fetched from Hugging Face Hub on first run.
+This evaluates the five classification settings and bidirectional Recall@1 on the 1,000-pair retrieval pool. It requires neither the training corpus nor optimizer state.
 
 ## Repository layout
 
+```text
+inference.py              Zero-shot classification and embedding API
+train_DFN_B16.sh          Canonical DFN2B ViT-B/16 training entry point
+train.sh                  Shared training launcher
+eval.sh / evaluate.py     Standalone paper evaluation
+paths.sh                  Public training-data layout and overrides
+MicroPool/                Evaluation-data reconstruction and verification
+docs/                     Static GitHub Pages project website
+semantic_caption/         Structure and cell-line knowledge tables
+src/                      Vendored OpenCLIP and MicroCLIP training code
 ```
-train.sh                  canonical training + seven-way evaluation entry point
-train_<BACKBONE>.sh       per-backbone wrappers (scale study)
-paths.sh                  all dataset paths, derived from MICRO_DATA_ROOT
-inference.py              zero-shot classification / embedding API
-scripts/                  dataset downloader, example extractor, smoke test
-semantic_caption/         L3 knowledge-level captions (structures, cell lines)
-src/open_clip/            vendored open_clip fork (256-token context support)
-src/open_clip_train/      training loop, evaluation, balancing, retrieval utilities
-tools/                    checkpoint conversion for release
-```
+
+## Scope and limitations
+
+MicroCLIP targets **single-channel fluorescence microscopy**. Transfer to held-out cell lines, composite labels, and acquisition sources remains substantially harder than IID recognition. We have not established MicroCLIP as a general encoder for every microscopy modality; new biological concepts and prompt formulations require separate evaluation.
 
 ## Citation
 
+If you use MicroCLIP or MicroPool-2M, please cite:
+
 ```bibtex
-@article{microclip2026,
-  title   = {MicroCLIP: Connecting Text and Microscopy Images via Contrastive Language--Image Pretraining},
-  author  = {TBD},
-  journal = {TBD},
-  year    = {2026}
+@misc{ruan2026microclip,
+  title  = {MicroCLIP: Connecting Text and Microscopy Images via Contrastive Language--Image Pretraining},
+  author = {Ruan, Yanran and Wei, Zhixiang and Hong, Shiyao and Ma, Xiaoxiao and
+            Gu, Yuxuan and Ye, Liming and Chen, Huaian and Jin, Yi},
+  year   = {2026}
 }
 ```
 
-`CITATION.cff` is machine-readable for GitHub's "Cite this repository" button.
+## License and acknowledgements
 
-## License and terms
+MicroCLIP project code is Apache-2.0; see [LICENSE](LICENSE). Third-party components retain their upstream licenses. See [LICENSES.md](LICENSES.md) for the scope of code, model-weight, and data terms.
 
-- **Code**: Apache-2.0 — see `LICENSE`.
-- **Model weights**: TBD — see `LICENSES.md`. Weights are fine-tuned from DFN2B-CLIP ViT-B/16, so the released weight license must be compatible with the base model's terms.
-- **Data**: MicroPool-2M aggregates images from several public repositories whose terms differ per source; see `LICENSES.md` for the per-source table and the redistribution position. Where redistribution is not permitted, the dataset release ships the splitter, per-class manifests, and source identifiers instead of image bytes.
-
-## Acknowledgements
-
-MicroCLIP is built on [OpenCLIP](https://github.com/mlfoundations/open_clip) and initialized from [DFN2B-CLIP](https://huggingface.co/apple/DFN2B-CLIP-ViT-B-16). The MicroPool-2M corpus aggregates data from the Human Protein Atlas, the Image Data Resource, RxRx, the Broad Bioimage Benchmark Collection, and the original publications those repositories cite.
+We base our implementation on [OpenCLIP](https://github.com/mlfoundations/open_clip), with modifications for microscopy training and a 256-token text context. We follow the contrastive image-text learning approach of [CLIP](https://github.com/openai/CLIP) and initialize both encoders from [DFN2B-CLIP ViT-B/16](https://huggingface.co/apple/DFN2B-CLIP-ViT-B-16). We thank the Human Protein Atlas, Image Data Resource, RxRx, Broad Bioimage Benchmark Collection, Light My Cells, and the original studies contributing microscopy data.
