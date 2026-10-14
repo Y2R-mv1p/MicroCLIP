@@ -35,3 +35,5 @@ body{font-size:17px;color:#233b32}.chapter-label{align-items:baseline;font-size:
 .results-examples{margin-top:48px;padding-top:32px;border-top:1px solid #cbdcd0}.results-examples .subfigure-heading{margin-top:0}.observation-chapter .figure-view img{display:block;margin-inline:auto}
 
 .embedding-results{margin-top:48px;padding-top:32px;border-top:1px solid #cbdcd0}.embedding-results .subfigure-heading{margin-top:0}
+
+.hero-content .authors a{color:inherit;text-decoration:underline;text-underline-offset:3px}.hero-content .authors a:hover{color:#1e5144}.hero-content .author-notes{font-size:13px;line-height:1.6;color:#586b6a;margin:8px 0 20px}

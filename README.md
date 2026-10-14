@@ -4,6 +4,11 @@
   <p><strong>Connecting Text and Microscopy Images<br>via Contrastive Language–Image Pretraining</strong></p>
   <p>Describe the biology. Search the cells.</p>
   <p>
+    Yanran Ruan<sup>*</sup> · <a href="https://zxwei.site/">Zhixiang Wei</a><sup>*</sup> · Shiyao Hong · <a href="https://krennic999.github.io/">Xiaoxiao Ma</a><br>
+    Yuxuan Gu · Liming Ye · Huaian Chen<sup>†</sup> · Yi Jin<sup>†</sup>
+  </p>
+  <p><sup>*</sup> Equal contribution (co-first authors). <sup>†</sup> Co-corresponding authors.</p>
+  <p>
     <a href="https://arxiv.org/abs/2610.17866"><img src="https://img.shields.io/badge/arXiv-2610.17866-b31b1b" alt="MicroCLIP paper on arXiv"></a>
     <a href="https://y2r-mv1p.github.io/MicroCLIP/"><img src="https://img.shields.io/badge/Project_Page-MicroCLIP-008C95" alt="MicroCLIP project page"></a>
     <a href="https://github.com/Y2R-mv1p/MicroCLIP"><img src="https://img.shields.io/badge/Code-GitHub-5367C8" alt="MicroCLIP code on GitHub"></a>
