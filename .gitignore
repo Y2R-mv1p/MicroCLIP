@@ -18,7 +18,7 @@ venv/
 *.tmp
 nohup.out
 
-# --- Locally generated quickstart images (see scripts/make_examples.sh) ---
+# --- Locally generated quickstart images ---
 # Not shipped: the source-image terms in LICENSES.md must be checked first.
 examples/
 
@@ -32,3 +32,8 @@ examples/
 # Reconstructed evaluation data and raw source downloads (keep outside the repo).
 micropool-eval/
 *.part
+
+# Local maintenance notes and optional example-generation helper.
+/docs/README.md
+/REPRODUCIBILITY_AUDIT.md
+/scripts/make_examples.sh
