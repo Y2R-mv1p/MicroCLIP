@@ -2,7 +2,7 @@
 
 Open index.html directly in a browser. No build, CDN, or installation is required.
 
-The cover markup and styling come from ../docs. The rest of the page is rebuilt around the complete manuscript Abstract and five original paper figures. The page includes responsive navigation, enlarged figure dialogs, downloadable figure PDFs, a local manuscript PDF, and BibTeX.
+The cover markup and styling come from ../docs. The rest of the page is rebuilt around the complete manuscript Abstract and five original paper figures. The page includes responsive navigation, enlarged figure dialogs, downloadable figure PDFs, links to the arXiv paper and PDF, and BibTeX.
 
 ## Content sources
 
@@ -10,7 +10,7 @@ The cover markup and styling come from ../docs. The rest of the page is rebuilt 
 - Figures: manuscript Figure/teaser.pdf, framework.pdf, dataset_visual5.pdf, retrieval.pdf, and 3dpca2.pdf. PNG derivatives rendered at 2,400 pixels wide, preserving full figure boundaries.
 - Cover microscopy and fluorescence mosaic: ../docs/assets; provenance in ../docs/ASSET_SOURCES.md. Hero pseudocolor is for visualization; model input is single-channel.
 - Metrics: ../README.md, manuscript-reported values. The main table is shown directly before qualitative results and matches main.tex Table classification_retrieval, including all eight methods, parameter counts, grouped headings, and best/second-best markings.
-- Manuscript PDF: local draft from the sibling manuscript project; not a public arXiv release.
+- Paper: https://arxiv.org/abs/2610.17866; PDF: https://arxiv.org/pdf/2610.17866. The page links to the public arXiv version. The older local manuscript PDF is retained as an asset but is no longer linked from the page.
 
 ## Verification
 

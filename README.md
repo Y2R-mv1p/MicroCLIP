@@ -4,6 +4,7 @@
   <p><strong>Connecting Text and Microscopy Images<br>via Contrastive Language–Image Pretraining</strong></p>
   <p>Describe the biology. Search the cells.</p>
   <p>
+    <a href="https://arxiv.org/abs/2610.17866"><img src="https://img.shields.io/badge/arXiv-2610.17866-b31b1b" alt="MicroCLIP paper on arXiv"></a>
     <a href="https://y2r-mv1p.github.io/MicroCLIP/"><img src="https://img.shields.io/badge/Project_Page-MicroCLIP-008C95" alt="MicroCLIP project page"></a>
     <a href="https://github.com/Y2R-mv1p/MicroCLIP"><img src="https://img.shields.io/badge/Code-GitHub-5367C8" alt="MicroCLIP code on GitHub"></a>
   </p>
@@ -60,6 +61,8 @@ Classification is **Top-1 accuracy (%)**. Retrieval is **Recall@1 (%)** over **1
 | DFN2B-CLIP (ViT-B/16) | 150M | 1.44 | 1.41 | 4.32 | 0.81 | 16.49 | 0.5 | 0.1 |
 | **MicroCLIP** | **150M** | **98.46** | **67.70** | **34.07** | **46.13** | **36.53** | **61.5** | **63.3** |
 
+CLIP, SigLIP, SigLIP 2, PE-Core, and DFN2B-CLIP are **general-domain vision–language foundation models**. We develop MicroCLIP as a **microscopy-domain vision–language foundation model** for single-channel fluorescence microscopy, initializing both encoders from DFN2B-CLIP and training on microscopy image–text pairs. The comparison therefore evaluates general-domain models alongside our microscopy-domain model on microscopy recognition and retrieval tasks.
+
 The supervised classifier and Cell-DINO use different evaluation protocols from text-guided zero-shot methods. Source Shift contains 1,158 images from 13 categories in Light My Cells (S-BIAD1047). Organelle-Set Shift holds out complete structure labels, which can be composite.
 
 ## Quickstart
@@ -76,7 +79,7 @@ pip install -r requirements.txt
 export PYTHONPATH="$PWD/src:$PYTHONPATH"
 ```
 
-We provide a modified OpenCLIP implementation under `src/` to support a 256-token text context. Choose a PyTorch build compatible with your CUDA driver; CPU inference is also supported.
+We store the tokenizer vocabulary with Git LFS. Install Git LFS before running `git lfs pull` so the vocabulary is downloaded along with the code. We provide a modified OpenCLIP implementation under `src/` to support a 256-token text context. Choose a PyTorch build compatible with your CUDA driver; CPU inference is also supported.
 
 We provide `inference.py` to load a **MicroCLIP checkpoint** for inference and evaluation. It constructs the ViT-B/16 model with a 256-token text context, then loads the checkpoint directly. We use `pretrained=None` during inference because our MicroCLIP checkpoint already contains the trained parameters of both encoders, so the initial DFN2B weights do not need to be loaded separately.
 
@@ -232,7 +235,11 @@ If you use MicroCLIP or MicroPool-2M, please cite:
   title  = {MicroCLIP: Connecting Text and Microscopy Images via Contrastive Language--Image Pretraining},
   author = {Ruan, Yanran and Wei, Zhixiang and Hong, Shiyao and Ma, Xiaoxiao and
             Gu, Yuxuan and Ye, Liming and Chen, Huaian and Jin, Yi},
-  year   = {2026}
+  year   = {2026},
+  eprint = {2610.17866},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CV},
+  url    = {https://arxiv.org/abs/2610.17866}
 }
 ```
 
