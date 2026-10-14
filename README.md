@@ -193,7 +193,7 @@ In our launcher, we set the OpenCLIP architecture name to `ViT-B-16` and the def
 | Batch / precision | Global batch 8,192; bf16 |
 | Hardware / runtime | 8 × NVIDIA RTX PRO 5000 GPUs (72 GB each); approximately 55 hours |
 
-Each epoch writes model weights to `$OUTPUT_DIR/checkpoints/epochs/epoch_XXX.pt`; `checkpoints/last.pt` also stores optimizer and scaler state for resuming. Keep `EPOCHS=30` to reproduce the original cosine schedule even if evaluating epoch 15.
+Each epoch writes model weights to `$OUTPUT_DIR/checkpoints/epochs/epoch_XXX.pt`; `checkpoints/last.pt` also stores optimizer and scaler state for resuming.
 
 ## Evaluation
 
