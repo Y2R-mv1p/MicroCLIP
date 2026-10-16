@@ -40,11 +40,9 @@
 
 ## Presentation video
 
-The 1920 &times; 1080 presentation plays inline and starts muted when you scroll to it on the [project page](https://y2r-mv1p.github.io/MicroCLIP/#video). GitHub README previews link to the player; scroll-triggered autoplay is only available on the project page.
+https://github.com/user-attachments/assets/c583627f-9420-4d53-b625-49bb1ea80e9f
 
-[![Watch the MicroCLIP project presentation](docs/assets/dataset.jpg)](https://y2r-mv1p.github.io/MicroCLIP/#video)
-
-**[Watch the presentation](https://y2r-mv1p.github.io/MicroCLIP/#video)** | English | [Download MP4 (13 MB)](https://y2r-mv1p.github.io/MicroCLIP/assets/MicroCLIP-v5-v2-style-en.mp4)
+English presentation | 1920 &times; 1080 | [Watch on the project page](https://y2r-mv1p.github.io/MicroCLIP/#video) | [Download MP4 (14.8 MB)](https://y2r-mv1p.github.io/MicroCLIP/assets/MicroCLIP-v5-v2-style-en.mp4)
 
 ## Highlights
 
