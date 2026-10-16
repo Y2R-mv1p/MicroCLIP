@@ -14,6 +14,7 @@
     <a href="https://github.com/Y2R-mv1p/MicroCLIP"><img src="https://img.shields.io/badge/Code-GitHub-5367C8" alt="MicroCLIP code on GitHub"></a>
   </p>
   <p>
+    <a href="#presentation-video">Video</a> &middot;
     <a href="#highlights">Highlights</a> ·
     <a href="#results">Results</a> ·
     <a href="#quickstart">Quickstart</a> ·
@@ -36,6 +37,12 @@
 </p>
 
 <p align="center"><em>Learn biological factors from seen pairs. Recognize unseen combinations. Retrieve images with text.</em></p>
+
+## Presentation video
+
+[![Watch the MicroCLIP project presentation](docs/assets/dataset.jpg)](https://y2r-mv1p.github.io/MicroCLIP/#video)
+
+**[Watch the presentation](https://y2r-mv1p.github.io/MicroCLIP/#video)** | English | [Download MP4 (13 MB)](https://y2r-mv1p.github.io/MicroCLIP/assets/MicroCLIP-v5-v2-style-en.mp4)
 
 ## Highlights
 
